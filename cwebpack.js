@@ -31,6 +31,11 @@ class Compiler {
         toJson: () => stats,
       });
 
+      // watch mode
+      fileDependencies.forEach((fileDependencie) => {
+        fs.watch(fileDependencie, () => this.compile(onCompiled));
+      });
+
       this.hooks.done.call(); //当编译成功后会触发done这个钩子执行
     };
     this.compile(onCompiled); //开始编译，成功之后调用onCompiled
